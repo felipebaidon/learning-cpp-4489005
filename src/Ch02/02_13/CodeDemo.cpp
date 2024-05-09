@@ -9,9 +9,16 @@ int main(){
     float result; 
 
     // Write your code here
+    for(auto num : nums)
+    {
+        result += num;
+    }
+
+    result = result/5;
     
     std::cout << "The average is " << result << std::endl;
     
     std::cout << std::endl << std::endl;
+
     return (0);
 }
