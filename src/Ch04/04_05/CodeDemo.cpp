@@ -6,32 +6,37 @@
 #include <vector>
 #include "records.h"
 
+void initialize(StudentRecords& SR);
+
 int main(){
-    float GPA = 0.0f;
     int id;
-    
-    std::vector<Student> students = {Student(1, "George P. Burdell"),
-                                    Student(2, "Nancy Rhodes")};
-
-    std::vector<Course> courses = {Course(1, "Algebra", 5),
-                                Course(2, "Physics", 4),
-                                Course(3, "English", 3),
-                                Course(4, "Economics", 4)};
-
-    std::vector<Grade> grades = {Grade(1, 1, 'B'), Grade(1, 2, 'A'), Grade(1, 3, 'C'),
-                                Grade(2, 1, 'A'), Grade(2, 2, 'A'), Grade(2, 4, 'B')};
+    StudentRecords SR;
+    initialize(SR);
 
     std::cout << "Enter a student ID: " << std::flush;
     std::cin >> id;
 
-    // Calculate the GPA for the selected student.
-    // Write your code here
-
-    std::string student_str;
-    student_str = students[0].get_name(); // Change this to the selected student's name
-
-    std::cout << "The GPA for " << student_str << " is " << GPA << std::endl;
+    std::cout << "The GPA for " << SR.get_student_name(id) << " is " << SR.calculateGPA(id) << std::endl;
     
     std::cout << std::endl << std::endl;
     return (0);
+}
+
+void initialize(StudentRecords& SR)
+{
+    SR.add_student(1, "George P. Burdell");
+    SR.add_student(2, "Nancy Rhodes");
+    
+    SR.add_course(1, "Algebra", 5);
+    SR.add_course(2, "Physics", 4);
+    SR.add_course(3, "English", 3);
+    SR.add_course(4, "Economics", 4);
+
+    SR.add_grade(1, 1, 'B');
+    SR.add_grade(1, 2, 'A');
+    SR.add_grade(1, 3, 'C');
+    SR.add_grade(2, 1, 'A');
+    SR.add_grade(2, 2, 'A');
+    SR.add_grade(2, 4, 'B');
+
 }

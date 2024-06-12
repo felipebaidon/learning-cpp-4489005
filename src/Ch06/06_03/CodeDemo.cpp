@@ -7,6 +7,9 @@
 #include "records.h"
 
 void initialize(StudentRecords&);
+void Retrieve_StudentInfo(StudentRecords&);
+void Retrieve_Courses(StudentRecords&);
+void Retrieve_Grades(StudentRecords&);
 
 int main(){
     int id;
@@ -17,25 +20,96 @@ int main(){
     std::cout << "Enter a student ID: " << std::flush;
     std::cin >> id;
 
-    SR.report_card(id);
+    SR.Generate_records();
     
     std::cout << std::endl << std::endl;
     return (0);
 }
 
 void initialize(StudentRecords& srec){
-    srec.add_student(1, "George P. Burdell");
-    srec.add_student(2, "Nancy Rhodes");
+ 
+    Retrieve_StudentInfo(srec);
+    Retrieve_Courses(srec);
+    Retrieve_Grades(srec);
+}
 
-    srec.add_course(1, "Algebra", 5);
-    srec.add_course(2, "Physics", 4);
-    srec.add_course(3, "English", 3);
-    srec.add_course(4, "Economics", 4);
+void Retrieve_StudentInfo(StudentRecords& srec)
+{
+    std::ifstream inFile;
+    int sid;
+    std::string studentName;
+    std::string line;
+    
+    inFile.open("students.txt");
 
-    srec.add_grade(1, 1, 'B');
-    srec.add_grade(1, 2, 'A');
-    srec.add_grade(1, 3, 'C');
-    srec.add_grade(2, 1, 'A'); 
-    srec.add_grade(2, 2, 'A');
-    srec.add_grade(2, 4, 'B');
+    if(inFile.fail())
+        std::cout << "File not found! " << std::endl;
+    else
+    {
+        while(!inFile.eof())
+        {
+            getline(inFile, line);
+            sid = stoi(line);
+            getline(inFile, studentName);
+            srec.add_student(sid, studentName);
+        }
+
+        inFile.close();
+    }
+}
+
+void Retrieve_Courses(StudentRecords& srec)
+{
+    std::ifstream inFile;
+    int cid;
+    std::string courseName;
+    std::string line;
+    unsigned char credits;
+    
+    inFile.open("courses.txt");
+
+    if(inFile.fail())
+        std::cout << "File not found! " << std::endl;
+    else
+    {
+        while(!inFile.eof())
+        {
+            getline(inFile, line);
+            cid = stoi(line);
+            getline(inFile, courseName);
+            getline(inFile, line);
+            credits = line[0];
+            srec.add_course(cid, courseName, credits);
+        }
+        inFile.close();
+    }
+}
+
+void Retrieve_Grades(StudentRecords& srec)
+{
+    std::ifstream inFile;
+    int sid, cid;
+    std::string line;
+    char grade;
+    
+    inFile.open("grades.txt");
+
+    if(inFile.fail())
+        std::cout << "File not found! " << std::endl;
+    else
+    {
+        while(!inFile.eof())
+        {
+            getline(inFile, line);
+            sid = stoi(line);
+            getline(inFile, line);
+            cid = stoi(line);
+            getline(inFile, line);
+            grade = line[0];
+            
+            srec.add_grade(sid, cid, grade);
+        }
+
+        inFile.close();
+    }
 }

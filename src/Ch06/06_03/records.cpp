@@ -105,15 +105,32 @@ std::string StudentRecords::get_course_name(int cid) const{
     return courses[j].get_name();
 }
 
-void StudentRecords::report_card(int sid){
+void StudentRecords::report_card(int sid, std::ofstream &outFile){
     float points = 0.0f, credits = 0.0f;
-    std::cout << std::endl << "Report Card for " << get_student_name(sid) << std::endl;
+    
+    outFile << std::endl << "Report Card for " << get_student_name(sid) << std::endl;
     for (Grade& grd : grades)
         if (grd.get_student_id() == sid){
-            std::cout << get_course_name(grd.get_course_id()) << ": " << grd.get_grade() << std::endl;
+            outFile << get_course_name(grd.get_course_id()) << ": " << grd.get_grade() << std::endl;
             unsigned char current_credits = get_course_credits(grd.get_course_id());
             credits += current_credits;
             points += get_num_grade(grd.get_grade()) * current_credits;
         }
-    std::cout << "GPA: " << (points / credits) << std::endl;
+    outFile << "GPA: " << (points / credits) << std::endl;
+}
+
+void StudentRecords::Generate_records()
+{
+    std::ofstream outFile;
+
+    outFile.open("records.txt");
+    if(outFile.fail())
+        std::cout << " Unable to open the file! " << std::endl;
+    else
+    {
+        for(auto &student:students)
+        {
+            report_card(student.get_id(), outFile);
+        }
+    }
 }

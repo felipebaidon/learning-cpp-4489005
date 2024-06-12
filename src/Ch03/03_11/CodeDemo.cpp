@@ -11,6 +11,7 @@ int main(){
     Grade my_grade(1, 7, 'B');
 
     std::cout << "Student: " << my_student.get_name() << std::endl;
+    std::cout << "Student ID: " << my_student.get_id() << std::endl;
     std::cout << "Course: " << my_course.get_name() << std::endl;
     std::cout << "Credits: " << my_course.get_credits() << std::endl;
     std::cout << "Grade: " << my_grade.get_grade() << std::endl;

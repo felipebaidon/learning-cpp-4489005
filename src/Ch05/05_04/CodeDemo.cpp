@@ -3,7 +3,6 @@
 // Create a Report Card Function, by Eduardo Corpeño 
 
 #include <iostream>
-#include <vector>
 #include "records.h"
 
 void initialize(StudentRecords&);
